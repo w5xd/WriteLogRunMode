@@ -1,0 +1,3 @@
+[submodule "Install"]
+	path = Install
+	url = https://github.com/w5xd/WriteLogShortcutInstallHelper.git

@@ -1,0 +1,1 @@
+ConfigureShortcuts WriteLogRunMode RunModeProcessor /install
