@@ -204,6 +204,11 @@ namespace WriteLogRunMode
 
         public override void HoldTransmitHere()
         {
+            if (State == States.SENDING_VOX)
+            {
+                EndHoldTransmitHere();
+                return;
+            }
             SetState(States.SENDING_VOX);
             m_wlEntry.SetTransmitFocus();
             m_wlEntry.SetXmitPtt(1);

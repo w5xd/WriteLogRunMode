@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 1.0.0.6
-17 November, 2014
+Version 1.0.0.9
+17 February, 2015
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
@@ -82,6 +82,7 @@ to the keyboard:
  External:holdTransmitOn--indicate start of transmission that WriteLog is not automating.
           Asserts PTT and holds all other transmissions until another Message or abort.
           Useful for initiating talking into the transmit microphone or hand-sent CW.
+          Invoking this without other intervening state changes instead does endHoldTransmitOn.
 
  External:endHoldTransmitOn--to indicate end of holdTransmitOn. Releases PTT and
           tells run mode processor you are listening.
@@ -193,6 +194,9 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+
+version 1.0.0.9
+Work better in SSB mode
 
 version 1.0.0.5
 Turns AutoCQ off on start1RadioRunMode or start2RadioRunMode
