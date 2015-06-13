@@ -28,7 +28,7 @@ The only reasonable way to know the answers is for you to try it.
 I include the source code because maybe its close enough that
 a little tweak will make it right for you.
 
-It requires WriteLog version 11.23 or later.
+It requires WriteLog version 11.24 or later.
 
 To install:
 
