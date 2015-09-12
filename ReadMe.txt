@@ -76,7 +76,7 @@ to the keyboard:
  External:stop2RadioRunMode--recommend you replace the mapping you have MessageAbortTransmission. 
           Stops transmission in progress as well as stopping the auto-CQ.
 
- Externa::EntryClear--recommend you replace the mapping you have EntryClear.
+ External::EntryClear--recommend you replace the mapping you have EntryClear.
           Duplicates the WriteLog built-in EntryClear and also marks the CQ window as idle.
 
  External:holdTransmitOn--indicate start of transmission that WriteLog is not automating.
