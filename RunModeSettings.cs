@@ -26,6 +26,13 @@ namespace WriteLogRunMode
             get { return (bool)this["DynamicHeadphoneSplit"]; }
             set { this["DynamicHeadphoneSplit"] = value; }
         }
-       
+
+        [UserScopedSetting()]
+        [DefaultSettingValueAttribute("False")]
+        public bool FirstCallLetterStartsVOX
+        {
+            get { return (bool)this["FirstCallLetterStartsVOX"]; }
+            set { this["FirstCallLetterStartsVOX"] = value; }
+        }
     }
 }

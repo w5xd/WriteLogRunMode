@@ -33,13 +33,14 @@
             this.maxSecondsBetweenCALL = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.controlHpSplit = new System.Windows.Forms.CheckBox();
+            this.checkBoxCallVox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.maxSecondsBetweenCALL)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(206, 52);
+            this.buttonOK.Location = new System.Drawing.Point(206, 72);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(56, 23);
             this.buttonOK.TabIndex = 3;
@@ -50,7 +51,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(206, 81);
+            this.buttonCancel.Location = new System.Drawing.Point(206, 101);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(56, 23);
             this.buttonCancel.TabIndex = 4;
@@ -81,12 +82,22 @@
             // controlHpSplit
             // 
             this.controlHpSplit.AutoSize = true;
-            this.controlHpSplit.Location = new System.Drawing.Point(13, 51);
+            this.controlHpSplit.Location = new System.Drawing.Point(13, 71);
             this.controlHpSplit.Name = "controlHpSplit";
             this.controlHpSplit.Size = new System.Drawing.Size(145, 17);
             this.controlHpSplit.TabIndex = 2;
             this.controlHpSplit.Text = "&Dynamic headphone split";
             this.controlHpSplit.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCallVox
+            // 
+            this.checkBoxCallVox.AutoSize = true;
+            this.checkBoxCallVox.Location = new System.Drawing.Point(13, 43);
+            this.checkBoxCallVox.Name = "checkBoxCallVox";
+            this.checkBoxCallVox.Size = new System.Drawing.Size(200, 17);
+            this.checkBoxCallVox.TabIndex = 5;
+            this.checkBoxCallVox.Text = "on first CALL letter, holdTransmitVOX";
+            this.checkBoxCallVox.UseVisualStyleBackColor = true;
             // 
             // RunModeSettingsForm
             // 
@@ -94,14 +105,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(284, 113);
+            this.ClientSize = new System.Drawing.Size(284, 129);
+            this.Controls.Add(this.checkBoxCallVox);
             this.Controls.Add(this.controlHpSplit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.maxSecondsBetweenCALL);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.Name = "RunModeSettingsForm";
-            this.Text = "WriteLog Run Mode Settings";
+            this.Text = "RunMode Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunModeSettingsForm_FormClosing);
             this.Load += new System.EventHandler(this.RunModeSettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.maxSecondsBetweenCALL)).EndInit();
@@ -117,5 +129,6 @@
         private System.Windows.Forms.NumericUpDown maxSecondsBetweenCALL;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox controlHpSplit;
+        private System.Windows.Forms.CheckBox checkBoxCallVox;
     }
 }

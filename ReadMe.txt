@@ -1,11 +1,12 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 1.0.0.9
-17 February, 2015
+Version 1.0.2.2
+16 March, 2016
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
-It is definitely experimental. Use it at your own risk.
+It is experimental. But, on the other hand, it has also been
+successfully used to sustain very high rates. Use it at your own risk.
 
 Why would I want this?
 
@@ -83,14 +84,21 @@ to the keyboard:
           Asserts PTT and holds all other transmissions until another Message or abort.
           Useful for initiating talking into the transmit microphone or hand-sent CW.
           Invoking this without other intervening state changes instead does endHoldTransmitOn.
+ 
+ External:holdTransmitVOX--same as holdTransmitOn, except does not assert PTT.
 
  External:endHoldTransmitOn--to indicate end of holdTransmitOn. Releases PTT and
           tells run mode processor you are listening.
 
- External:Setup--brings up a configuration dialog. The run mode processor will
-          insert Message04 immediately after Message03 if your CALL has not been
-          sent more recently than "maximum seconds between CALL". Set this
-          negative to never insert Message04.
+ External:Setup--brings up a configuration dialog. 
+ 
+          The run mode processor will  insert Message04 immediately after Message03 
+		  if your CALL has not been sent more recently than "maximum seconds between 
+		  CALL". Set this negative to never insert Message04.
+
+		  The button "on first CALL letter, holdTransmitVOX" turns ON this feature.
+		  When, while run mode is active (after startNRadioRunMode) you type the first 
+		  letter into CALL, the holdTransmitVOX state is activated.
 
 You are not required to map all the above to keys, although you had better
 map stop2RadioRunMode if you map either of the first two. The holdTransmitOn is
@@ -194,6 +202,8 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+version 1.0.2.2
+add holdTransmitVOX
 
 version 1.0.0.9
 Work better in SSB mode

@@ -109,12 +109,19 @@ namespace WriteLogRunMode
                 SetState(States.RECEIVING_CALL);
         }
 
-        public override void OperatorMadeEntry()
+        public override void OperatorMadeEntry(bool isBlank, string Call)
         {
-            HeadphonesAsTyping();
+            if (isBlank)
+                HeadphonesAsTyping();
+            else if (m_Settings.FirstCallLetterStartsVOX &&
+                Call.Length == 1 &&
+                State != States.SENDING_VOX)
+            {
+                HoldTransmitHere(false);
+            }
         }
 
-        public override void HoldTransmitHere()
+        public override void HoldTransmitHere(bool pttControl)
         {
             if (State == States.SENDING_VOX)
             {
@@ -123,7 +130,10 @@ namespace WriteLogRunMode
             }
             SetState(States.SENDING_VOX);
             m_wlEntry.SetTransmitFocus();
-            m_wlEntry.SetXmitPtt(1);
+            if (pttControl)
+                m_wlEntry.SetXmitPtt(1);
+            else
+                m_wl.NotifyXmitStart();
             m_other.GrabPhones();
         }
 

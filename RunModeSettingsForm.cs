@@ -23,6 +23,7 @@ namespace WriteLogRunMode
         {
             maxSecondsBetweenCALL.Value = m_settings.MaxSecondsBetweenCALL;
             controlHpSplit.Checked = m_settings.DynamicHeadphoneSplit;
+            checkBoxCallVox.Checked = m_settings.FirstCallLetterStartsVOX;
         }
 
         private void RunModeSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -33,6 +34,7 @@ namespace WriteLogRunMode
         {
             m_settings.MaxSecondsBetweenCALL = (int)maxSecondsBetweenCALL.Value;
             m_settings.DynamicHeadphoneSplit = controlHpSplit.Checked;
+            m_settings.FirstCallLetterStartsVOX = checkBoxCallVox.Checked;
             m_settings.Save();
         }
 

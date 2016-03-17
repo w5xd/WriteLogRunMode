@@ -131,9 +131,9 @@ namespace WriteLogRunMode
 
         public abstract bool CanRelinquishFocus   {    get;  }
         public abstract void OnWipeQSO();
-        public abstract void HoldTransmitHere();
+        public abstract void HoldTransmitHere(bool pttControl);
         public abstract void EndHoldTransmitHere();
-        public abstract void OperatorMadeEntry();
+        public abstract void OperatorMadeEntry(bool QsoIsBlank, string Call);
     }
 
  

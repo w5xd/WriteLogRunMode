@@ -33,7 +33,8 @@ namespace WriteLogRunMode
                 "holdTransmitOn",
                 "endHoldTransmitOn",
                 "EntryClear",
-                "Setup"
+                "Setup",
+                "holdTransmitVOX",
         };
 
         // add "case" in the "switch" below
@@ -115,13 +116,14 @@ namespace WriteLogRunMode
                     break;
 
                 case 3: // "holdTransmitHere
+                case 7: // "holdTransmitVOX
                     {
                         WriteLogClrTypes.ISingleEntry wle = 
                             wl.GetCurrentEntry() as WriteLogClrTypes.ISingleEntry;
                         short curId = wle.GetEntryId();
                         Entry ent;
                         if (m_Entries.TryGetValue(curId, out ent))
-                            ent.HoldTransmitHere();
+                            ent.HoldTransmitHere(which == 3);
                     }
                     break;
 
@@ -238,21 +240,21 @@ namespace WriteLogRunMode
                 ent.OnLoggedQso();
         }
 
-        public override void OnEntryWindowUpdated(WriteLogClrTypes.ISingleEntry rentry, short isblank, WriteLogClrTypes.IWriteL wl)
+        public override void OnEntryWindowUpdated(WriteLogClrTypes.ISingleEntry rentry, short isblank, 
+            WriteLogClrTypes.IWriteL wl)
         {
             short id = rentry.GetEntryId();
 #if DEBUG
             System.Diagnostics.Debug.WriteLine(
                 "WriteLogRunMode.RunModeProcessor.OnEntryWindowUpdated " +
                 id.ToString() );
-#endif            
+#endif  
             Entry ent;
             if (m_Entries.TryGetValue(id, out ent))
             {
-                if (isblank == 0)
-                    ent.OperatorMadeEntry();
+                ent.OperatorMadeEntry(isblank != 0, rentry.Callsign);
             }
-        }
+         }
         #endregion
 
     }
