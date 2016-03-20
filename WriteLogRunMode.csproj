@@ -66,6 +66,7 @@
       <DependentUpon>RunModeSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SpEntry.cs" />
+    <Compile Include="DuelingCQEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RunModeSettingsForm.resx">

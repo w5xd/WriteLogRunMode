@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 1.0.2.2
-16 March, 2016
+Version 1.0.2.3
+30 March, 2016
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
@@ -73,6 +73,13 @@ to the keyboard:
  External:start1RadioRunMode--starts 1-radio CQ. 
           Sends Message11 and then Message11 repeats on that radio. The other
           radio is assumed to be search and pounce.
+
+ External:startDuelingCQtop
+ External:startDuelingCQbottom --starts simplified dueling CQ with first CQ on top Entry
+          (or bottom).  Sends Message11 first on that radio, puts keyboard focus (and
+		  headphones if not headphones split) on the listening radio. Type anything
+		  into either Entry Window and dueling stops with the keyboard (and headphones)
+		  set to that Entry.
 
  External:stop2RadioRunMode--recommend you replace the mapping you have MessageAbortTransmission. 
           Stops transmission in progress as well as stopping the auto-CQ.
@@ -202,6 +209,9 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+version 1.0.2.3
+add startDuelingCQtop&bottom
+
 version 1.0.2.2
 add holdTransmitVOX
 

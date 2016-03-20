@@ -133,7 +133,7 @@ namespace WriteLogRunMode
         public abstract void OnWipeQSO();
         public abstract void HoldTransmitHere(bool pttControl);
         public abstract void EndHoldTransmitHere();
-        public abstract void OperatorMadeEntry(bool QsoIsBlank, string Call);
+        public abstract void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry rentry);
     }
 
  

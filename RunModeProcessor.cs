@@ -35,6 +35,8 @@ namespace WriteLogRunMode
                 "EntryClear",
                 "Setup",
                 "holdTransmitVOX",
+                "startDuelingCQtop",
+                "startDuelingCQbottom",
         };
 
         // add "case" in the "switch" below
@@ -49,12 +51,17 @@ namespace WriteLogRunMode
             {
                 case 0: // "stop2RadioRunMode"
                     m_Entries.Clear();
+                    m_amDualTimedCQ = false;
+                    m_am2RadioCq = false;
+                    m_am1RadioCq = false;
                     wl.InvokeKeyboardCommand("MessageAbortTransmission");
                     break;
 
                 case 1: // "start2RadioRunMode"
                     if (!m_am2RadioCq)
                         m_Entries.Clear();
+                    m_amDualTimedCQ = false;
+                    m_am1RadioCq = false;
                     if (m_Entries.Count == 0)
                     {
                         WriteLogClrTypes.ISingleEntry r1 = wl.GetEntry(0) as WriteLogClrTypes.ISingleEntry;
@@ -87,9 +94,11 @@ namespace WriteLogRunMode
                     break;
 
                 case 2:// "start1RadioRunMode"
+                    if (!m_am1RadioCq)
                     {
                         m_Entries.Clear();
                         m_am2RadioCq = false;
+                        m_amDualTimedCQ = false;
                         WriteLogClrTypes.ISingleEntry rcq = wl.GetCurrentEntry() as WriteLogClrTypes.ISingleEntry;
                         short curId = rcq.GetEntryId();
                         short otherId = (short)((((int)curId - 1) + 1) % 2);
@@ -107,6 +116,7 @@ namespace WriteLogRunMode
                             m_Entries[rsp.GetEntryId()] = esp;
                             ecq.RunModeSettings = m_Settings;
                             esp.RunModeSettings = m_Settings;
+                            m_am1RadioCq = true;
                          }
                          else
                             throw new System.NotSupportedException("Need two Entry Windows");
@@ -158,6 +168,48 @@ namespace WriteLogRunMode
                     }
                     break;
 
+                case 8: //"startDuelingCQtop",
+                case 9: //"startDuelingCQbottom",
+                    {
+                        WriteLogClrTypes.ISingleEntry r1 = wl.GetEntry(0) as WriteLogClrTypes.ISingleEntry;
+                        WriteLogClrTypes.ISingleEntry r2 = wl.GetEntry(1) as WriteLogClrTypes.ISingleEntry;
+                        if (!m_amDualTimedCQ)
+                        {
+                            m_Entries.Clear();
+                            m_am2RadioCq = false;
+                            m_am1RadioCq = false;
+                            if ((r1 != null) && (r2 != null))
+                            {
+                                short CallFieldNumber = wl.CALLFieldNumber;
+                                DuelingCQEntry e1 = new DuelingCQEntry(r1, wl);
+                                DuelingCQEntry e2 = new DuelingCQEntry(r2, wl);
+                                e1.CallFieldNumber = CallFieldNumber;
+                                e2.CallFieldNumber = CallFieldNumber;
+                                e1.other = e2;
+                                e2.other = e1;
+                                m_Entries[r1.GetEntryId()] = e1;
+                                m_Entries[r2.GetEntryId()] = e2;
+                                m_amDualTimedCQ = true;
+                                e1.RunModeSettings = m_Settings;
+                                e2.RunModeSettings = m_Settings;
+                            }
+                            else
+                                throw new System.NotSupportedException("Need two Entry Windows");
+                        }
+                        if (m_amDualTimedCQ)
+                        {
+                            wl.TimedCqMessageNumber = 0; // cancel WL's built-in auto-cq, if its active
+                            foreach (Entry e in m_Entries.Values)
+                            {
+                                DuelingCQEntry dcq = e as DuelingCQEntry;
+                                dcq.Init();
+                            }
+                            WriteLogClrTypes.ISingleEntry toCq = (which == 8) ? r1 : r2;
+                            toCq.SendProgramMsg(Entry.CQ_MEMORY);
+                        }
+                    }
+                    break;
+
                 default:
                     throw new IndexOutOfRangeException();
             }
@@ -182,6 +234,8 @@ namespace WriteLogRunMode
         #region object state
         private Dictionary<short, Entry> m_Entries = new Dictionary<short, Entry>();
         private bool m_am2RadioCq = false;
+        private bool m_am1RadioCq = false;
+        private bool m_amDualTimedCQ = false;
         private RunModeSettings m_Settings = new RunModeSettings();
         #endregion
 
@@ -191,7 +245,7 @@ namespace WriteLogRunMode
 
         public override void OnProgramMessageCompleted(WriteLogClrTypes.ISingleEntry rEntry, WriteLogClrTypes.IWriteL rWl)
         {
-            short id = rEntry.GetEntryId();
+             short id = rEntry.GetEntryId();
             Entry ent;
             if (m_Entries.TryGetValue(id, out ent))
                 ent.OnProgramMessageCompleted();
@@ -208,7 +262,6 @@ namespace WriteLogRunMode
         public override void OnStartMessage(WriteLogClrTypes.ISingleEntry rEntry, 
             WriteLogClrTypes.IWriteL rWl, int msg,  int stillActive)
         {
-            rWl.TimedCqMessageNumber = 0; // cancel WL's built-in auto-cq, if its active
             short id = rEntry.GetEntryId();
             Entry ent;
             if (m_Entries.TryGetValue(id, out ent))
@@ -251,9 +304,7 @@ namespace WriteLogRunMode
 #endif  
             Entry ent;
             if (m_Entries.TryGetValue(id, out ent))
-            {
-                ent.OperatorMadeEntry(isblank != 0, rentry.Callsign);
-            }
+                ent.OperatorMadeEntry(isblank != 0, rentry);
          }
         #endregion
 

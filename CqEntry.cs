@@ -197,13 +197,13 @@ namespace WriteLogRunMode
             }
         }
 
-        public override void OperatorMadeEntry(bool isBlank, string Call)
+        public override void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry rentry)
         {
-            if (isBlank)
-                HeadphonesAsTyping();
-            else if (m_Settings.FirstCallLetterStartsVOX &&
-                Call.Length == 1 && 
-                State != States.SENDING_VOX)
+            HeadphonesAsTyping();
+            if (m_Settings.FirstCallLetterStartsVOX &&
+                State != States.SENDING_VOX &&
+                m_CallFieldNumber == rentry.CurrentFieldNumber &&
+                rentry.Callsign.Length == 1 )
             {
                 HoldTransmitHere(false);
             }

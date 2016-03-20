@@ -109,16 +109,9 @@ namespace WriteLogRunMode
                 SetState(States.RECEIVING_CALL);
         }
 
-        public override void OperatorMadeEntry(bool isBlank, string Call)
+        public override void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry r)
         {
-            if (isBlank)
                 HeadphonesAsTyping();
-            else if (m_Settings.FirstCallLetterStartsVOX &&
-                Call.Length == 1 &&
-                State != States.SENDING_VOX)
-            {
-                HoldTransmitHere(false);
-            }
         }
 
         public override void HoldTransmitHere(bool pttControl)
