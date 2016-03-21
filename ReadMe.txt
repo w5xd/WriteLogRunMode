@@ -209,6 +209,9 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+version 2.0.2.0
+add setting for Stop aligns xmit&keyboard focus 
+
 version 2.0.1.0
 add startDuelingCQtop&bottom
 

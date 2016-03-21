@@ -55,6 +55,12 @@ namespace WriteLogRunMode
                     m_am2RadioCq = false;
                     m_am1RadioCq = false;
                     wl.InvokeKeyboardCommand("MessageAbortTransmission");
+                    if (m_Settings.StopAlignsTransmitAndKeyboardFocus)
+                    {
+                        WriteLogClrTypes.ISingleEntry ce = wl.GetCurrentEntry() as WriteLogClrTypes.ISingleEntry;
+                        ce.SetFocusWithPhones(1);
+                        ce.SetTransmitFocus();
+                    }
                     break;
 
                 case 1: // "start2RadioRunMode"

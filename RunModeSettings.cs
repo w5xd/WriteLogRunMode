@@ -34,5 +34,13 @@ namespace WriteLogRunMode
             get { return (bool)this["FirstCallLetterStartsVOX"]; }
             set { this["FirstCallLetterStartsVOX"] = value; }
         }
+
+        [UserScopedSetting()]
+        [DefaultSettingValueAttribute("False")]
+        public bool StopAlignsTransmitAndKeyboardFocus
+        {
+            get { return (bool)this["StopAlignsTransmitAndKeyboardFocus"]; }
+            set { this["StopAlignsTransmitAndKeyboardFocus"] = value; }
+        }
     }
 }
