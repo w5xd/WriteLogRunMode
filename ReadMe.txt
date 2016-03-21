@@ -1,6 +1,6 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 1.0.2.3
+Version 2.0.1.0
 30 March, 2016
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
@@ -209,7 +209,7 @@ Good luck.
 Wayne, W5XD
 
 ********************************
-version 1.0.2.3
+version 2.0.1.0
 add startDuelingCQtop&bottom
 
 version 1.0.2.2
