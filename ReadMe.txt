@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 2.0.1.0
-30 March, 2016
+Version 2.0.2.0
+21 March, 2016
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
