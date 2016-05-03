@@ -174,6 +174,17 @@ map to the ESCAPE key. (This shortcut stops the 1 radio version as well.)
 
 ********************************
 
+Where are the settings stored? I can't find them in writelog.ini.
+
+They are not in writelog.ini. The WriteLogRunMode uses Microsoft's .NET
+technology to store its settings, and that framework places its settings
+here by default on Windows 7:
+
+C:\Users\<YourUserName>\AppData\Local\WriteLog_Contesting_Softw
+
+
+********************************
+
 Some details about what the run mode processor does.
 
 The only message it sends is CQ, and then only when nothing else is going on.
