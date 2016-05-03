@@ -131,7 +131,7 @@ namespace WriteLogRunMode
                     break;
 
             }
-            if (stillActive == 0)
+            if ((stillActive == 0) || !m_Settings.EnableRedBox)
             {
                 HeadphonesAsTransmit();
                 m_other.GrabFocusAndPhones();

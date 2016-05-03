@@ -25,6 +25,7 @@ namespace WriteLogRunMode
             controlHpSplit.Checked = m_settings.DynamicHeadphoneSplit;
             checkBoxCallVox.Checked = m_settings.FirstCallLetterStartsVOX;
             checkBoxStopWithFocus.Checked = m_settings.StopAlignsTransmitAndKeyboardFocus;
+            cbRedBox.Checked = m_settings.EnableRedBox;
         }
 
         private void RunModeSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -37,6 +38,7 @@ namespace WriteLogRunMode
             m_settings.DynamicHeadphoneSplit = controlHpSplit.Checked;
             m_settings.FirstCallLetterStartsVOX = checkBoxCallVox.Checked;
             m_settings.StopAlignsTransmitAndKeyboardFocus = checkBoxStopWithFocus.Checked;
+            m_settings.EnableRedBox = cbRedBox.Checked;
             m_settings.Save();
         }
 

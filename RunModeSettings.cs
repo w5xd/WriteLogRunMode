@@ -42,5 +42,13 @@ namespace WriteLogRunMode
             get { return (bool)this["StopAlignsTransmitAndKeyboardFocus"]; }
             set { this["StopAlignsTransmitAndKeyboardFocus"] = value; }
         }
+
+        [UserScopedSetting()]
+        [DefaultSettingValueAttribute("True")]
+        public bool EnableRedBox
+        {
+            get { return (bool)this["EnableRedBox"]; }
+            set { this["EnableRedBox"] = value; }
+        }
     }
 }

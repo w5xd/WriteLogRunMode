@@ -35,6 +35,7 @@
             this.controlHpSplit = new System.Windows.Forms.CheckBox();
             this.checkBoxCallVox = new System.Windows.Forms.CheckBox();
             this.checkBoxStopWithFocus = new System.Windows.Forms.CheckBox();
+            this.cbRedBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.maxSecondsBetweenCALL)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +45,7 @@
             this.buttonOK.Location = new System.Drawing.Point(242, 110);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(56, 23);
-            this.buttonOK.TabIndex = 5;
+            this.buttonOK.TabIndex = 20;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -55,7 +56,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(242, 139);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(56, 23);
-            this.buttonCancel.TabIndex = 6;
+            this.buttonCancel.TabIndex = 21;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
@@ -110,6 +111,16 @@
             this.checkBoxStopWithFocus.Text = "&Stop aligns xmit&&keyboard focus";
             this.checkBoxStopWithFocus.UseVisualStyleBackColor = true;
             // 
+            // cbRedBox
+            // 
+            this.cbRedBox.AutoSize = true;
+            this.cbRedBox.Location = new System.Drawing.Point(13, 123);
+            this.cbRedBox.Name = "cbRedBox";
+            this.cbRedBox.Size = new System.Drawing.Size(103, 17);
+            this.cbRedBox.TabIndex = 5;
+            this.cbRedBox.Text = "Enable Red Box";
+            this.cbRedBox.UseVisualStyleBackColor = true;
+            // 
             // RunModeSettingsForm
             // 
             this.AcceptButton = this.buttonOK;
@@ -117,6 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(308, 168);
+            this.Controls.Add(this.cbRedBox);
             this.Controls.Add(this.checkBoxStopWithFocus);
             this.Controls.Add(this.checkBoxCallVox);
             this.Controls.Add(this.controlHpSplit);
@@ -143,5 +155,6 @@
         private System.Windows.Forms.CheckBox controlHpSplit;
         private System.Windows.Forms.CheckBox checkBoxCallVox;
         private System.Windows.Forms.CheckBox checkBoxStopWithFocus;
+        private System.Windows.Forms.CheckBox cbRedBox;
     }
 }

@@ -49,6 +49,11 @@ namespace WriteLogRunMode
                     SetState(States.STOPPED);
                     break;
             }
+            if ((stillActive == 0) || !m_Settings.EnableRedBox)
+            {
+                HeadphonesAsTransmit();
+                m_other.GrabFocusAndPhones();
+            }
         }
 
         public override short DelayStartMessage(int id)
