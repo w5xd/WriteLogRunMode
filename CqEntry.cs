@@ -19,7 +19,7 @@ namespace WriteLogRunMode
 
     internal class CqEntry : Entry
     {
-
+        private const int MAX_CLEARED_IDLE_MSEC = 5000;
         public enum States
         {
             IDLE, // would like to send CQ, but were blocked for some reason
@@ -178,8 +178,12 @@ namespace WriteLogRunMode
             }
         }
 
+        private int NonBlankOpEntryId = 0;
+        private int BlankOpEntryId = -1;
+
         public override void OnWipeQSO()
         {
+            NonBlankOpEntryId += 1; // disable timer
             if (!Sending)
             {
                 switch (m_state)
@@ -197,8 +201,45 @@ namespace WriteLogRunMode
             }
         }
 
+        private void OpBlankEntryTimer(int oldId)
+        {
+            if (oldId == NonBlankOpEntryId)
+            {   // there has been no operator entry during the timer
+                OnWipeQSO();
+#if DEBUG
+                Debug.WriteLine("Invoked Setting Blank Operator Entry timer");
+#endif
+            }
+            else
+            {
+#if DEBUG
+                Debug.WriteLine("Ignored Setting Blank Operator Entry timer");
+#endif            
+            }
+        }
+
         public override void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry rentry)
         {
+            if (QsoIsBlank)
+            {
+                if (BlankOpEntryId != NonBlankOpEntryId)
+                {
+                    int last = NonBlankOpEntryId;
+                    TimerOnThisThread timerOnThread = new TimerOnThisThread(() => OpBlankEntryTimer(last));
+                    System.Threading.Timer tm = new System.Threading.Timer(
+                        timerOnThread.OnTimer,
+                       timerOnThread,
+                       MAX_CLEARED_IDLE_MSEC, // allow Entry Window to remain blank only 10 seconds
+                       System.Threading.Timeout.Infinite);
+                    timerOnThread.tm = tm;
+                    BlankOpEntryId = NonBlankOpEntryId; // only start once
+#if DEBUG
+                    Debug.WriteLine("Setting Blank Operator Entry timer");
+#endif
+                }
+            }
+            else
+                NonBlankOpEntryId += 1;
             HeadphonesAsTyping();
             if (m_Settings.FirstCallLetterStartsVOX &&
                 State != States.SENDING_VOX &&
@@ -390,6 +431,26 @@ namespace WriteLogRunMode
             }
             else   //other radio was sending, so wait
                 SetState(States.DELAYED_TU);
+        }
+    }
+
+    delegate void StaTimer();
+
+    internal class TimerOnThisThread
+    {
+        private System.Windows.Threading.Dispatcher m_disp;
+        private StaTimer m_ot;
+        public TimerOnThisThread(StaTimer ot)
+        {
+            m_disp = System.Windows.Threading.Dispatcher.CurrentDispatcher;
+            m_ot = ot;
+        }
+        public System.Threading.Timer tm;
+        public void OnTimer(Object o)
+        {
+            m_disp.Invoke(m_ot);
+            if (tm != null) // there is a race...but we should never lose...
+                tm.Dispose(); // ..but we check anyway
         }
     }
 }

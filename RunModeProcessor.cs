@@ -167,11 +167,8 @@ namespace WriteLogRunMode
                     break;
 
                 case 6: // Setup
-                    {
-                        RunModeSettingsForm f = new RunModeSettingsForm(m_Settings);
+                    using (RunModeSettingsForm f = new RunModeSettingsForm(m_Settings))
                         f.ShowDialog();
-                        f.Dispose();
-                    }
                     break;
 
                 case 8: //"startDuelingCQtop",

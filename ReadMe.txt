@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 2.0.3.0
-May, 2016
+Version 2.0.4.0
+August, 2016
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
@@ -220,6 +220,10 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+version 2.0.4.0
+Blanking out an Entry Window without using External: EntryClear holds off the CQ
+timer for a maximum of 5 seconds and then resumes CQing as if EntryClear had been invoked.
+
 version 2.0.3.0
 add setting for Enable Red Box 
 
