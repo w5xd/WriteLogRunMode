@@ -136,6 +136,9 @@
             this.Controls.Add(this.maxSecondsBetweenCALL);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "RunModeSettingsForm";
             this.Text = "RunMode Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunModeSettingsForm_FormClosing);
