@@ -63,7 +63,8 @@ namespace WriteLogRunMode
                 case States.SENDING_CQ:
                 case States.SENDING_TU:
                     SetState(States.RECEIVING_CALL);
-                    break;                
+                    break;      
+          
             }
             HeadphonesAsReceive();
         }
@@ -225,13 +226,9 @@ namespace WriteLogRunMode
                 if (BlankOpEntryId != NonBlankOpEntryId)
                 {
                     int last = NonBlankOpEntryId;
-                    TimerOnThisThread timerOnThread = new TimerOnThisThread(() => OpBlankEntryTimer(last));
-                    System.Threading.Timer tm = new System.Threading.Timer(
-                        timerOnThread.OnTimer,
-                       timerOnThread,
-                       MAX_CLEARED_IDLE_MSEC, // allow Entry Window to remain blank only 10 seconds
-                       System.Threading.Timeout.Infinite);
-                    timerOnThread.tm = tm;
+                    TimerOnThisThread timerOnThread = new TimerOnThisThread(
+                                        MAX_CLEARED_IDLE_MSEC, // allow Entry Window to remain blank only 10 seconds
+                                        () => OpBlankEntryTimer(last));
                     BlankOpEntryId = NonBlankOpEntryId; // only start once
 #if DEBUG
                     Debug.WriteLine("Setting Blank Operator Entry timer");
@@ -438,19 +435,25 @@ namespace WriteLogRunMode
 
     internal class TimerOnThisThread
     {
-        private System.Windows.Threading.Dispatcher m_disp;
-        private StaTimer m_ot;
-        public TimerOnThisThread(StaTimer ot)
+        public TimerOnThisThread(int msec, StaTimer ot)
         {
             m_disp = System.Windows.Threading.Dispatcher.CurrentDispatcher;
             m_ot = ot;
+            m_tm = new System.Threading.Timer(
+               this.OnTimer,
+               this,
+               msec, 
+               System.Threading.Timeout.Infinite);
         }
-        public System.Threading.Timer tm;
-        public void OnTimer(Object o)
+        private System.Windows.Threading.Dispatcher m_disp;
+        private StaTimer m_ot;
+        private System.Threading.Timer m_tm;
+        private void OnTimer(Object o)
         {
             m_disp.Invoke(m_ot);
-            if (tm != null) // there is a race...but we should never lose...
-                tm.Dispose(); // ..but we check anyway
+            if (m_tm != null) // there is a race...but we should never lose...
+                m_tm.Dispose(); // ..but we check anyway
+            m_tm = null;
         }
     }
 }
