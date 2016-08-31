@@ -78,6 +78,7 @@
     <None Include="buildkit.bat">
       <SubType>Designer</SubType>
     </None>
+    <None Include="GetBuildVer.bat" />
     <None Include="install.bat" />
     <None Include="uninstall.bat" />
   </ItemGroup>
