@@ -49,7 +49,7 @@ namespace WriteLogRunMode
                     break;
 
             }
-            if (stillActive == 0)
+            if (stillActive == 0 || !m_Settings.EnableRedBox)
             {
                 HeadphonesAsTransmit();
                 m_other.GrabFocusAndPhones();
@@ -176,7 +176,9 @@ namespace WriteLogRunMode
 
         public override Sending_t SendingPriority
         {
-            get { return Sending ? Sending_t.SENDING_DONT_STOPME : Sending_t.NOT_SENDING; }
+            get { 
+                return Sending ? Sending_t.SENDING_DONT_STOPME : Sending_t.NOT_SENDING; 
+            }
         }
 
         public override bool CanRelinquishFocus
@@ -184,7 +186,10 @@ namespace WriteLogRunMode
             /* We want to keep the focus if we are copying an exchange */
             get
             {
-                return (m_state != States.SENDING_VOX) && (m_state != States.RECEIVING_EXCHANGE);
+                return (m_state != States.SENDING_VOX) && 
+                    (m_state != States.RECEIVING_EXCHANGE) && 
+                    String.IsNullOrEmpty(m_wlEntry.Callsign) &&
+                    (m_wlEntry.CurrentFieldNumber == m_CallFieldNumber);
             }
         }
 
