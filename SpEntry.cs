@@ -188,8 +188,8 @@ namespace WriteLogRunMode
             {
                 return (m_state != States.SENDING_VOX) && 
                     (m_state != States.RECEIVING_EXCHANGE) && 
-                    String.IsNullOrEmpty(m_wlEntry.Callsign) &&
-                    (m_wlEntry.CurrentFieldNumber == m_CallFieldNumber);
+                    (String.IsNullOrEmpty(m_wlEntry.Callsign) ||
+                    (m_wlEntry.CurrentFieldNumber != m_CallFieldNumber));
             }
         }
 
