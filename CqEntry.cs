@@ -47,7 +47,7 @@ namespace WriteLogRunMode
         public override void OnProgramMessageCompleted()
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.CqEntry.OnProgramMessageCompleted " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnProgramMessageCompleted " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString());
 #endif
@@ -60,8 +60,12 @@ namespace WriteLogRunMode
                     SetState(States.RECEIVING_EXCHANGE);
                     break;
 
-                case States.SENDING_CQ:
                 case States.SENDING_TU:
+                    NonBlankOpEntryId += 1; // disable timer
+                    SetState(States.RECEIVING_CALL);
+                    break;
+
+                case States.SENDING_CQ:
                     SetState(States.RECEIVING_CALL);
                     break;      
           
@@ -72,7 +76,7 @@ namespace WriteLogRunMode
         public override short DelayStartMessage(int id) 
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.CqEntry.DelayStartMessage " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.DelayStartMessage " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString() + " " +
                 id.ToString());
@@ -97,7 +101,7 @@ namespace WriteLogRunMode
             )
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.CqEntry.OnStartMessage " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnStartMessage " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString() + " msg: " +
                 id.ToString());
@@ -150,7 +154,7 @@ namespace WriteLogRunMode
         public override void OnLoggedQso()
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.CqEntry.OnLoggedQso " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnLoggedQso " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString());
 #endif
@@ -161,7 +165,7 @@ namespace WriteLogRunMode
         public override void OnListenIntervalComplete()
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.CqEntry.OnListenIntervalComplete " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnListenIntervalComplete " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString());
 #endif
@@ -208,13 +212,13 @@ namespace WriteLogRunMode
             {   // there has been no operator entry during the timer
                 OnWipeQSO();
 #if DEBUG
-                Debug.WriteLine("Invoked Setting Blank Operator Entry timer");
+                Debug.WriteLine(DateTime.Now.TimeOfDay + " CqEntry Invoked Setting Blank Operator Entry timer");
 #endif
             }
             else
             {
 #if DEBUG
-                Debug.WriteLine("Ignored Setting Blank Operator Entry timer");
+                Debug.WriteLine(DateTime.Now.TimeOfDay + "CqEntry Ignored Setting Blank Operator Entry timer");
 #endif            
             }
         }
@@ -231,7 +235,7 @@ namespace WriteLogRunMode
                                         () => OpBlankEntryTimer(last));
                     BlankOpEntryId = NonBlankOpEntryId; // only start once
 #if DEBUG
-                    Debug.WriteLine("Setting Blank Operator Entry timer");
+                    Debug.WriteLine(DateTime.Now.TimeOfDay + " Setting Blank Operator Entry timer");
 #endif
                 }
             }
@@ -349,14 +353,13 @@ namespace WriteLogRunMode
                 SetState(States.IDLE);
             }
         }
-        
-        
+
         #endregion
 
         private void SetState(States value)
         {
 #if DEBUG
-                Debug.WriteLine("WriteLogRunMode.CqEntry.SetState " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.SetState " +
                     m_EntryId.ToString() + " " +
                     value.ToString() + " from: " +
                     m_state.ToString());

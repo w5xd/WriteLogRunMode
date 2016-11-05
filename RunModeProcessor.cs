@@ -301,8 +301,8 @@ namespace WriteLogRunMode
         {
             short id = rentry.GetEntryId();
 #if DEBUG
-            System.Diagnostics.Debug.WriteLine(
-                "WriteLogRunMode.RunModeProcessor.OnEntryWindowUpdated " +
+            System.Diagnostics.Debug.WriteLine(DateTime.Now.TimeOfDay +
+                " WriteLogRunMode.RunModeProcessor.OnEntryWindowUpdated " +
                 id.ToString() );
 #endif  
             Entry ent;

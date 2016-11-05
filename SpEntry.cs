@@ -37,7 +37,7 @@ namespace WriteLogRunMode
             )
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.SpEntry.OnStartMessage " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.OnStartMessage " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString() + " msg: " +
                 id.ToString());
@@ -67,7 +67,7 @@ namespace WriteLogRunMode
         public override void OnProgramMessageCompleted()
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.SpEntry.OnProgramMessageCompleted " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.OnProgramMessageCompleted " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString());
 #endif
@@ -84,7 +84,7 @@ namespace WriteLogRunMode
         public override void OnLoggedQso()
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.SpEntry.OnLoggedQso " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.OnLoggedQso " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString());
 #endif
@@ -97,7 +97,7 @@ namespace WriteLogRunMode
         public override void OnListenIntervalComplete()
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.SpEntry.OnListenIntervalComplete " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.OnListenIntervalComplete " +
                 m_EntryId.ToString() + " " +
                 m_state.ToString());
 #endif
@@ -186,11 +186,31 @@ namespace WriteLogRunMode
             /* We want to keep the focus if we are copying an exchange */
             get
             {
-                return (m_state != States.SENDING_VOX) && 
-                    (m_state != States.RECEIVING_EXCHANGE) && 
+                bool ret = (m_state != States.SENDING_VOX) &&
+                    (m_state != States.RECEIVING_EXCHANGE) &&
                     (String.IsNullOrEmpty(m_wlEntry.Callsign) ||
                     (m_wlEntry.CurrentFieldNumber != m_CallFieldNumber));
+#if DEBUG
+                Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.CanRelinquishFocus " +
+                m_EntryId.ToString() + " " +
+                ret.ToString() + " state: " +
+                m_state.ToString());
+#endif
+                return ret;
             }
+        }
+        public override bool CanRelinquishHeadphoneFocus
+        { 
+            get 
+            {
+#if DEBUG
+                Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.CanRelinquishHeadphoneFocus " +
+                m_EntryId.ToString() + 
+               " state: " +
+                m_state.ToString());
+#endif               
+                return m_state != States.RECEIVING_EXCHANGE; 
+            } 
         }
 
         public override short DelayStartMessage(int id)
@@ -219,7 +239,7 @@ namespace WriteLogRunMode
         private void SetState(States value)
         {
 #if DEBUG
-            Debug.WriteLine("WriteLogRunMode.SpEntry.SetState " +
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.SpEntry.SetState " +
                 m_EntryId.ToString() + " " +
                 value.ToString() + " from: " +
                 m_state.ToString());

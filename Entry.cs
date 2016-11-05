@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace WriteLogRunMode
 {
@@ -80,13 +81,23 @@ namespace WriteLogRunMode
         // this is both headphones and keyboard
         public void GrabFocusAndPhonesIfAppropriate()
         {
+#if DEBUG
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.Entry.GrabFocusAndPhonesIfAppropriate " +
+                    m_EntryId.ToString());
+#endif            
             if (m_other.CanRelinquishFocus)
                 GrabFocusAndPhones();
+            else if (m_other.CanRelinquishHeadphoneFocus)
+                GrabPhones();
         }
 
         // this is both headphones and keyboard
         public void GrabFocusAndPhones()
-        {   
+        {
+#if DEBUG
+            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.Entry.GrabFocusAndPhones " +
+                m_EntryId.ToString());
+#endif
             m_wlEntry.SetFocusWithPhones(1  /* headphones too, if not split */ );
         }
 
@@ -130,6 +141,7 @@ namespace WriteLogRunMode
         #endregion
 
         public abstract bool CanRelinquishFocus   {    get;  }
+        public virtual bool CanRelinquishHeadphoneFocus { get { return false; } }
         public abstract void OnWipeQSO();
         public abstract void HoldTransmitHere(bool pttControl);
         public abstract void EndHoldTransmitHere();
