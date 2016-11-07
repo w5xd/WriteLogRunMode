@@ -220,6 +220,10 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+version 2.0.6.0			November, 2016
+Fix CQ mode, TU message delay to start 5 second time on end of TU message rather than begin
+For start1RadioRunMode, add ability to separate headphone focus from keyboard focus.
+
 version 2.0.5.0
 A couple of fixes to the start1RadioRunMode. Honor the EnableRedBox setting,
 and don't snatch keyboard focus away from S&P radio if its CALL not empty.
