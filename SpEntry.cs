@@ -18,8 +18,7 @@ namespace WriteLogRunMode
 
         public SpEntry(WriteLogClrTypes.ISingleEntry wlEntry, WriteLogClrTypes.IWriteL wl)
             : base(wlEntry, wl)
-        {
-        }
+        { }
 
         #region object state
 
@@ -74,7 +73,8 @@ namespace WriteLogRunMode
             switch (m_state)
             {
                 default:
-                    SetState(States.RECEIVING_EXCHANGE);
+                    SetState(String.IsNullOrEmpty(m_wlEntry.Callsign) ? 
+                        States.RECEIVING_CALL : States.RECEIVING_EXCHANGE);
                     break;
             }
             HeadphonesAsReceive();
@@ -111,7 +111,10 @@ namespace WriteLogRunMode
 
         public override void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry r)
         {
+            if (!QsoIsBlank)
                 HeadphonesAsTyping();
+            else if (!Sending)
+                SetState(States.RECEIVING_CALL);
         }
 
         public override void HoldTransmitHere(bool pttControl)

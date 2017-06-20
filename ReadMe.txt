@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 2.0.5.0
-September, 2016
+Version 2.0.7.0
+June, 2017
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
@@ -56,9 +56,9 @@ The run mode processor ASSUMES that you have set up the following message buffer
 in Setup-CW/RTTY/SSB messages:
 
     Message11--is a CQ -> it sends this message when a CQ rig is otherwise idle
-    Message10--sends the CALL and exchange
+    Message10--sends HIS call then exchange
     Message02--sends the exchange (bug: WriteLog versions prior to 12.10 don't work with runmode and Message02)
-    Message03--sends QSL QRZ? -> it sends this when you log a QSO a CQ rig.
+    Message03--sends QSL QRZ? -> it sends this when you log a QSO on a CQ rig.
     Message04--sends MY call
     Message05--send HIS call
     Message06--sends AGN?
@@ -218,6 +218,10 @@ Copy it to WriteLog's Programs directory. (or copy it here and run Install.bat)
 
 Good luck.
 Wayne, W5XD
+
+********************************
+version 2.0.7.0			June, 2017
+Changed S&P window's keyboard focus handling.
 
 ********************************
 version 2.0.6.0			November, 2016
