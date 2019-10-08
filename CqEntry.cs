@@ -47,8 +47,7 @@ namespace WriteLogRunMode
         public override void OnProgramMessageCompleted()
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnProgramMessageCompleted " +
-                m_EntryId.ToString() + " " +
+            Debug.WriteLine( m_EntryId.ToString() + " " + DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnProgramMessageCompleted " +
                 m_state.ToString());
 #endif
             switch (m_state)
@@ -76,8 +75,8 @@ namespace WriteLogRunMode
         public override short DelayStartMessage(int id) 
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.DelayStartMessage " +
-                m_EntryId.ToString() + " " +
+            Debug.WriteLine(  m_EntryId.ToString() + " " +
+                DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.DelayStartMessage " +
                 m_state.ToString() + " " +
                 id.ToString());
 #endif
@@ -101,8 +100,8 @@ namespace WriteLogRunMode
             )
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnStartMessage " +
-                m_EntryId.ToString() + " " +
+            Debug.WriteLine(m_EntryId.ToString() + " " +
+                DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnStartMessage " +
                 m_state.ToString() + " msg: " +
                 id.ToString());
 #endif
@@ -154,8 +153,8 @@ namespace WriteLogRunMode
         public override void OnLoggedQso()
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnLoggedQso " +
-                m_EntryId.ToString() + " " +
+            Debug.WriteLine(m_EntryId.ToString() + " " +
+                DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnLoggedQso " +
                 m_state.ToString());
 #endif
             SendTU();
@@ -165,8 +164,8 @@ namespace WriteLogRunMode
         public override void OnListenIntervalComplete()
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnListenIntervalComplete " +
-                m_EntryId.ToString() + " " +
+            Debug.WriteLine(m_EntryId.ToString() + " " +
+                DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.OnListenIntervalComplete " +
                 m_state.ToString());
 #endif
             switch (m_state)
@@ -297,14 +296,20 @@ namespace WriteLogRunMode
             }
         }
 
-        public override Sending_t SendingPriority
-        {
-            get { return Sending ? 
-                    (
-                        (m_state == States.SENDING_CQ) ?
-                            Sending_t.SENDING_CAN_STOPME 
-                        : Sending_t.SENDING_DONT_STOPME)
-                    : Sending_t.NOT_SENDING; }
+        public override Sending_t SendingPriority {
+            get {
+                if (Sending)
+                {
+                    if (m_state == States.SENDING_CQ)
+                    {
+                        if (m_wl.AbortOrShortenCwCQ() != 0)
+                            return Sending_t.SENDING_CAN_STOPME;
+                    }
+                    return Sending_t.SENDING_DONT_STOPME;
+                }
+                else
+                    return Sending_t.NOT_SENDING;
+            }
         }
 
         public override bool CanRelinquishFocus
@@ -359,8 +364,8 @@ namespace WriteLogRunMode
         private void SetState(States value)
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.SetState " +
-                    m_EntryId.ToString() + " " +
+            Debug.WriteLine(m_EntryId.ToString() + " " +
+                DateTime.Now.TimeOfDay + " WriteLogRunMode.CqEntry.SetState " +    
                     value.ToString() + " from: " +
                     m_state.ToString());
 #endif

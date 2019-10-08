@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WriteLogRunMode</RootNamespace>
     <AssemblyName>WriteLogRunMode</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -33,6 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -44,8 +45,8 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="WriteLogClrTypes">
+      <HintPath>..\wl12\RELEASE\WriteLogClrTypes.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>C:\Program Files (x86)\WriteLog\Programs\WriteLogClrTypes.dll</HintPath>
     </Reference>
     <Reference Include="WriteLogExternalShortcuts">
       <HintPath>C:\Program Files (x86)\WriteLog\Programs\WriteLogExternalShortcuts.dll</HintPath>

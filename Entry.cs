@@ -82,8 +82,8 @@ namespace WriteLogRunMode
         public void GrabFocusAndPhonesIfAppropriate()
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.Entry.GrabFocusAndPhonesIfAppropriate " +
-                    m_EntryId.ToString());
+            Debug.WriteLine(m_EntryId.ToString() + " " +
+                DateTime.Now.TimeOfDay + " WriteLogRunMode.Entry.GrabFocusAndPhonesIfAppropriate " );
 #endif            
             if (m_other.CanRelinquishFocus)
                 GrabFocusAndPhones();
@@ -95,8 +95,7 @@ namespace WriteLogRunMode
         public void GrabFocusAndPhones()
         {
 #if DEBUG
-            Debug.WriteLine(DateTime.Now.TimeOfDay + " WriteLogRunMode.Entry.GrabFocusAndPhones " +
-                m_EntryId.ToString());
+            Debug.WriteLine(m_EntryId.ToString() + " " + DateTime.Now.TimeOfDay + " WriteLogRunMode.Entry.GrabFocusAndPhones " );
 #endif
             m_wlEntry.SetFocusWithPhones(1  /* headphones too, if not split */ );
         }

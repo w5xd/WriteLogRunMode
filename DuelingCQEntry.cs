@@ -102,8 +102,14 @@ namespace WriteLogRunMode
                 switch (m_state)
                 {
                     case States.SENDING_CQ:
+                        if (m_wl.AbortOrShortenCwCQ() != 0)
+                            return Sending_t.SENDING_CAN_STOPME;
+                        else
+                            return Sending_t.SENDING_DONT_STOPME;
+
                     case States.SENDING_OTHER:
                         return Sending_t.SENDING_CAN_STOPME;
+
                     default:
                         break;
                 }

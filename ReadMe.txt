@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
 Version 2.0.8.0
-UNDATED 
+October, 2019 
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 
@@ -29,7 +29,7 @@ The only reasonable way to know the answers is for you to try it.
 I include the source code because maybe its close enough that
 a little tweak will make it right for you.
 
-It requires WriteLog version 11.24 or later.
+As of 2.0.8.0, WriteLogRunMode requires WriteLog version 12.44 or later.
 
 To install:
 
@@ -221,6 +221,10 @@ Wayne, W5XD
 
 ********************************
 version 2.0.8.0			
+REQUIRES WriteLog 12.44 or later, else will crash!
+Supports "Atomic" messages inside a CQ. They are marking in WriteLog Setup/CW messages with %A.
+If you have a writelog.ini setting [winkey] PollTimerMsec, you should either remove it
+with this version, or set it to 20 or lower.
 
 ********************************
 version 2.0.7.0			June, 2017
