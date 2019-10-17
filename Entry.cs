@@ -19,7 +19,7 @@ namespace WriteLogRunMode
      * 
      */
 
-    internal abstract class Entry
+    internal abstract class Entry: IDisposable
     {
         // The operator must setup his memories like this:
         public const short CQ_MEMORY = 11; // F11 or F1 sends CQ
@@ -145,6 +145,53 @@ namespace WriteLogRunMode
         public abstract void HoldTransmitHere(bool pttControl);
         public abstract void EndHoldTransmitHere();
         public abstract void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry rentry);
+
+        #region IDisposable Support
+        // This is very ugly, but required to avoid a crash at WriteLog exit.
+        // This object retains references to COM objects that it must call 
+        // Marshal.ReleaseComObject() to free up before WL exits:
+        // https://devblogs.microsoft.com/cppblog/mixing-deterministic-and-non-deterministic-cleanup/
+        private bool disposedValue = false; // To detect redundant calls
+
+        // the TODO's below come from Visual Studio's implementation using the dispose pattern.
+        // The comments are retained to explain where future changes belong.
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects).
+                }
+                // unmanaged disposals
+                if (null != m_wl)
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(m_wl);
+                m_wl = null;
+                if (null != m_wlEntry)
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(m_wlEntry);
+                m_wlEntry = null;
+
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+         ~Entry() {
+           // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+           Dispose(false);
+         }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 
  

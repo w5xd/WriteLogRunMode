@@ -19,6 +19,17 @@ namespace WriteLogRunMode
     //class RunModeProcessor is the connection from WriteLog 
     public class RunModeProcessor : 
         WriteLogShortcutHelper.EntryStateHelper /* shortcut helper is distributed with WriteLog */
+
+        // its ugly, but if this implementation retains a copy of either
+        // WriteLogClrTypes.ISingleEntry or WriteLogClrTypes.IWriteL,
+        // then it MUST implement IDispose and it MUST call Marshal.ReleaseComObject()
+        // on those saved copies.
+        // https://devblogs.microsoft.com/cppblog/mixing-deterministic-and-non-deterministic-cleanup/
+        // The penalty for failing to do IDisposable is that WriteLog will crash on exit because
+        // the clr garbage collector will run AFTER WL has given up on this run mode processor
+        // and deleted objects that the GC will try to delete again...and access violate.
+
+        , IDisposable
     {
         /* These are the names of the commands as they will appear
            in WriteLog's Keyboard Shortcuts "Command to run" list: */
@@ -309,7 +320,14 @@ namespace WriteLogRunMode
             if (m_Entries.TryGetValue(id, out ent))
                 ent.OperatorMadeEntry(isblank != 0, rentry);
          }
+
         #endregion
+
+        public void Dispose()
+        {
+            foreach (var ent in m_Entries)
+                ent.Value.Dispose();
+        }
 
     }
 }
