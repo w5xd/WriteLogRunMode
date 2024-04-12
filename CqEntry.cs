@@ -303,8 +303,16 @@ namespace WriteLogRunMode
                 {
                     if (m_state == States.SENDING_CQ)
                     {
-                        if (m_AmOperatingCW && m_wl.AbortOrShortenCwCQ() != 0)
-                            return Sending_t.SENDING_CAN_STOPME;
+                        if (m_AmOperatingCW)
+                        {
+                            if (m_wl.AbortOrShortenCwCQ() != 0)
+                                return Sending_t.SENDING_CAN_STOPME;
+                        }
+                        else if (m_AmOperatingVoice)
+                        {
+                            if (m_VoiceCQmemoryInterruptible)
+                                return Sending_t.SENDING_CAN_STOPME;
+                        }
                     }
                     return Sending_t.SENDING_DONT_STOPME;
                 }

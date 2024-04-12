@@ -66,6 +66,8 @@ namespace WriteLogRunMode
         protected WriteLogClrTypes.IWriteL m_wl;
         protected short m_lastHeadphonesSet = -1;
         protected bool m_AmOperatingCW = false;
+        protected bool m_AmOperatingVoice = false;
+        protected bool m_VoiceCQmemoryInterruptible = true;
 
         // We have some logic based on what the operator has done with
         // his Entry window insertion cursor and need to know which
@@ -112,6 +114,11 @@ namespace WriteLogRunMode
             short mode=0; double rx=0; double tx=0; short split=0;
             m_wlEntry.GetLogFrequency(ref mode, ref rx, ref tx, ref split);
             m_AmOperatingCW = mode == 3;
+            m_AmOperatingVoice = (mode != 3) && (mode != 6);
+            var t = m_wl.GetFKeyMsgVoice(CQ_MEMORY-2).ToUpper();
+            m_VoiceCQmemoryInterruptible = 
+                    !m_AmOperatingVoice ||
+                    !m_wl.GetFKeyMsgVoice(CQ_MEMORY-2).ToUpper().StartsWith("%A");
         }
 
 
