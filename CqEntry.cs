@@ -108,6 +108,7 @@ namespace WriteLogRunMode
             switch ((short)id)
             {
                 case CQ_MEMORY:
+                    CheckWhetherCW();
                     SetState(States.SENDING_CQ);
                     m_SentCALLat = System.Environment.TickCount;
                     break;
@@ -302,7 +303,7 @@ namespace WriteLogRunMode
                 {
                     if (m_state == States.SENDING_CQ)
                     {
-                        if (m_wl.AbortOrShortenCwCQ() != 0)
+                        if (m_AmOperatingCW && m_wl.AbortOrShortenCwCQ() != 0)
                             return Sending_t.SENDING_CAN_STOPME;
                     }
                     return Sending_t.SENDING_DONT_STOPME;

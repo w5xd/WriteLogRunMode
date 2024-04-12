@@ -43,6 +43,7 @@ namespace WriteLogRunMode
             switch ((short)id)
             {
                 case CQ_MEMORY:
+                    CheckWhetherCW();
                     SetState(States.SENDING_CQ);
                     break;
                 default:
@@ -102,7 +103,7 @@ namespace WriteLogRunMode
                 switch (m_state)
                 {
                     case States.SENDING_CQ:
-                        if (m_wl.AbortOrShortenCwCQ() != 0)
+                        if (m_AmOperatingCW && m_wl.AbortOrShortenCwCQ() != 0)
                             return Sending_t.SENDING_CAN_STOPME;
                         else
                             return Sending_t.SENDING_DONT_STOPME;

@@ -65,6 +65,7 @@ namespace WriteLogRunMode
         protected WriteLogClrTypes.ISingleEntry m_wlEntry;
         protected WriteLogClrTypes.IWriteL m_wl;
         protected short m_lastHeadphonesSet = -1;
+        protected bool m_AmOperatingCW = false;
 
         // We have some logic based on what the operator has done with
         // his Entry window insertion cursor and need to know which
@@ -105,6 +106,14 @@ namespace WriteLogRunMode
         {
             m_wlEntry.SetHeadphones(1  /* do nothing if headphones are split */);
         }
+
+        protected void CheckWhetherCW()
+        {
+            short mode=0; double rx=0; double tx=0; short split=0;
+            m_wlEntry.GetLogFrequency(ref mode, ref rx, ref tx, ref split);
+            m_AmOperatingCW = mode == 3;
+        }
+
 
         #region dynamic heaphone split support
 

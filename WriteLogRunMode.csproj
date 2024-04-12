@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
     <Reference Include="WriteLogClrTypes">
-      <HintPath>..\wl12\RELEASE\WriteLogClrTypes.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\WriteLog\Programs\WriteLogClrTypes.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="WriteLogExternalShortcuts">

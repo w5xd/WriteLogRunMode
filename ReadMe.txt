@@ -220,6 +220,10 @@ Good luck.
 Wayne, W5XD
 
 ********************************
+version 2.0.10.0	April, 2024
+Only query whether WriteLog's CW transmission is in progress when operating CW
+
+********************************
 version 2.0.9.0			
 Fix crash on exit...that only really fixes the crash on WriteLog 12.45 and later
 
