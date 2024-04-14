@@ -1,21 +1,20 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 2.0.9.0
-October, 2019 
+Version 2.0.11.0
+April, 2024 
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
-
-It is experimental. But, on the other hand, it has also been
-successfully used to sustain very high rates. Use it at your own risk.
+This extension has been successfully used to sustain very high rates. 
+Use it at your own risk.
 
 Why would I want this?
 
 If ALL Four of these are true:
 
 You run two radios on one PC, and with two Entry windows.
-You have an SO2R box that switches your headphones between the two radios.
+You run headphones with automated switching between the two radios.
 You want to reduce the number of keystrokes switching between the radios.
-You are willing to use a keystroke to designate one or both radios as RUN mode (calling CQ)
+You are willing to use a keystroke to designate one or both radios as RUN mode (i.e. calling CQ)
 
 Then you MIGHT want to use this add-in.
 This add-on takes these actions:
@@ -26,12 +25,10 @@ The reason MIGHT is capitalized is that your definitions of "radio is idle"
 and "correct" might not match what the run processor thinks.
 
 The only reasonable way to know the answers is for you to try it.
-I include the source code because maybe its close enough that
-a little tweak will make it right for you.
 
-As of 2.0.8.0, WriteLogRunMode requires WriteLog version 12.44 or later.
-
+********************************
 To install:
+As of 2.0.8.0, WriteLogRunMode requires WriteLog version 12.44 or later.
 
 Unzip the distribution zip file somewhere--a temporary location will do.
 
@@ -171,6 +168,18 @@ the External:endHoldTransmitOn key.
 
 If you need everything to stop, use stop2RadioRunMode which most ops would
 map to the ESCAPE key. (This shortcut stops the 1 radio version as well.)
+
+********************************
+WriteLog supports the concept of an atomic section of recorded message in CW,
+and, in SSB, the concept of an uninterruptible recorded message. In both cases,
+you use a %A in WriteLog's f-key memory setup to designate a section of the
+CW message that the run mode processor may not interrupt, or, in SSB, that
+an entire message may not be interrupted. 
+
+This feature is important, for example, in CW, so that "CQ 8P5A" does not become
+"CQ 8P5E". Program the message as "CQ%A 8P5A%a". In SSB you might have a very
+short CQ message that, when you use it, you want it not to be clipped. Maybe
+it says CQ 8P5A in MSG11.wav. Program WriteLog's f-key memory as "%AMSG11.wav".
 
 ********************************
 
