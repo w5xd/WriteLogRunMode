@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 2.0.12.0
-September, 2024 
+Version 2.0.13.0
+September, 2025 
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 This extension has been successfully used to sustain very high rates. 
@@ -53,18 +53,45 @@ The run mode processor ASSUMES that you have set up the following message buffer
 in Setup-CW/RTTY/SSB messages:
 
     Message11--is a CQ -> it sends this message when a CQ rig is otherwise idle
+    MessageShift11--CQ specific to 2nd radio
     Message10--sends HIS call then exchange
     Message02--sends the exchange (bug: WriteLog versions prior to 12.10 don't work with runmode and Message02)
     Message03--sends QSL QRZ? -> it sends this when you log a QSO on a CQ rig.
+    MessageShift03--QSL QRZ? specific to 2nd radio
     Message04--sends MY call
     Message05--send HIS call
     Message06--sends AGN?
+
+The MessageShift11 and MessageShift03 are only used if the corresponding check
+box is turned on in the 
 
 Keyboard shortcuts.
 The keyboard processor makes the following shortcuts available to be mapped
 to the keyboard:
 
- External:start2RadioRunMode--starts 2-radio CQ. 
+  External:Setup--brings up a configuration dialog. 
+          The run mode processor will  insert Message04 immediately after Message03 
+		  if your CALL has not been sent more recently than "maximum seconds between 
+		  CALL". Set this negative to never insert Message04.
+
+		  The button "on first CALL letter, holdTransmitVOX" turns ON this feature.
+		  When, while run mode is active (after startNRadioRunMode) you type the first 
+		  letter into CALL, the holdTransmitVOX state is activated.
+
+          Shift F1 ... on 2nd radio and Shift F3 ... on 2nd radio checkboxes 
+          DO NOT turn these on if your WriteLog version is less than 12.91.
+          It causes 2RadioRunMode to use the shift f-key memories for the corresponding
+          transmissions (only for 2RadioRunMode), and only on the 2nd radio. (The very 
+          first CQ message on start2RadioRunMode, however, always uses F1, not Shift-F1, 
+          even if its on the 2nd radio.) With the QSL checkbox on, the + key in WriteLog
+          still sends F3 and not Shift+F3, however the 2RadioRunMode will initiate 
+          SHIFT+F3 when a QSO is logged with some other method than + (e.g. ENTER)
+          
+          The 2nd radio is defined to be the one on the lower of the two Entry Windows 
+          on screen involved in dual run. Without the check boxes, the same memory is 
+          used on both radios.
+
+External:start2RadioRunMode--starts 2-radio CQ. 
           Sends Message11 and then Message11 repeats and alternates on both radios
 
  External:start1RadioRunMode--starts 1-radio CQ. 
@@ -94,18 +121,8 @@ to the keyboard:
  External:endHoldTransmitOn--to indicate end of holdTransmitOn. Releases PTT and
           tells run mode processor you are listening.
 
- External:Setup--brings up a configuration dialog. 
- 
-          The run mode processor will  insert Message04 immediately after Message03 
-		  if your CALL has not been sent more recently than "maximum seconds between 
-		  CALL". Set this negative to never insert Message04.
-
-		  The button "on first CALL letter, holdTransmitVOX" turns ON this feature.
-		  When, while run mode is active (after startNRadioRunMode) you type the first 
-		  letter into CALL, the holdTransmitVOX state is activated.
-
 You are not required to map all the above to keys, although you had better
-map stop2RadioRunMode if you map either of the first two. The holdTransmitOn is
+map stop2RadioRunMode if you map either of the two "start" actions. The holdTransmitOn is
 also a matter of preference. You can do without it if all your transmissions are
 done from MessageNN shortcuts, or if you can develop the habit of only speaking (SSB)
 or sending hand-sent CW when the run mode processor is not going to switch the
@@ -221,12 +238,16 @@ red box.
 
 ********************************
 
-The WriteLogRunMode directory is the source. Use Visual Studio Express 2010,
+The WriteLogRunMode directory is the source. Use Visual Studio 2019,
 If you like, build yourself a new WriteLogRunMode.dll.
 Copy it to WriteLog's Programs directory. (or copy it here and run Install.bat)
 
 Good luck.
 Wayne, W5XD
+
+********************************
+version 2.0.13.0	September, 2025
+Add ability to specify a per-radio Fkey message for CQ and/or QRZ
 
 ********************************
 version 2.0.12.0	September, 2024

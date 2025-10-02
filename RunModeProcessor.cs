@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 /*
@@ -92,8 +93,11 @@ namespace WriteLogRunMode
                             e2.CallFieldNumber = CallFieldNumber;
                             e1.other = e2;
                             e2.other = e1;
-                            m_Entries[r1.GetEntryId()] = e1;
-                            m_Entries[r2.GetEntryId()] = e2;
+                            var r1id = r1.GetEntryId();
+                            var r2id = r2.GetEntryId();
+                            m_Entries[r1id] = e1;
+                            m_Entries[r2id] = e2;
+
                             m_am2RadioCq = true;
                             e1.RunModeSettings = m_Settings;
                             e2.RunModeSettings = m_Settings;
@@ -101,12 +105,21 @@ namespace WriteLogRunMode
                         else
                             throw new System.NotSupportedException("Need two Entry Windows");
                     }
-                    if (m_Entries.Count > 0)
+                    if (m_Entries.Count > 1)
                     {
+                        var rLower = m_Entries.Keys.Max();
+                        CqEntry lower = m_Entries[rLower] as CqEntry;
+                        if (null != lower)
+                        {
+                            if (m_Settings.Radio2ShiftF1)
+                                lower.SetCqMemory(Entry.SHIFT_CQ_MEMORY);
+                            if (m_Settings.Radio2ShiftF3)
+                                lower.SetQslQrzMemory(Entry.SHIFT_QSL_QRZ_MEMORY);
+                        }
                         WriteLogClrTypes.ISingleEntry en = (WriteLogClrTypes.ISingleEntry)
                             wl.GetCurrentEntry();
                         wl.TimedCqMessageNumber = 0; // cancel WL's built-in auto-cq, if its active
-                        en.SendProgramMsg(Entry.CQ_MEMORY);
+                        en.SendProgramMsg(Entry.CQ_MEMORY); // FIRST CQ never on shift-F1
                     }
                     break;
 

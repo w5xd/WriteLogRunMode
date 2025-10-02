@@ -50,5 +50,21 @@ namespace WriteLogRunMode
             get { return (bool)this["EnableRedBox"]; }
             set { this["EnableRedBox"] = value; }
         }
+
+        [UserScopedSetting()]
+        [DefaultSettingValueAttribute("False")]
+        public bool Radio2ShiftF3
+        {
+            get { return (bool)this["Radio2ShiftF3"]; }
+            set { this["Radio2ShiftF3"] = value; }
+        }
+
+        [UserScopedSetting()]
+        [DefaultSettingValueAttribute("False")]
+        public bool Radio2ShiftF1
+        {
+            get { return (bool)this["Radio2ShiftF1"]; }
+            set { this["Radio2ShiftF1"] = value; }
+        }
     }
 }

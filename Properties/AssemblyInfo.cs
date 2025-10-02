@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WriteLog Contesting Software LLC")]
 [assembly: AssemblyProduct("WriteLogRunMode")]
-[assembly: AssemblyCopyright("Copyright © WriteLog Contesting Software LLC 2024")]
+[assembly: AssemblyCopyright("Copyright © WriteLog Contesting Software LLC 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 //4
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("2.0.12.0")]
-[assembly: AssemblyFileVersion("2.0.12.0")]
+[assembly: AssemblyVersion("2.0.13.5")]
+[assembly: AssemblyFileVersion("2.0.13.5")]

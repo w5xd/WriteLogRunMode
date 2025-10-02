@@ -23,19 +23,22 @@ namespace WriteLogRunMode
     {
         // The operator must setup his memories like this:
         public const short CQ_MEMORY = 11; // F11 or F1 sends CQ
+        protected const short SHIFT_OFFSET = 19;
+        public const short SHIFT_CQ_MEMORY = CQ_MEMORY + SHIFT_OFFSET;
         protected const short CALLEXCHANGE_MEMORY = 10;   // F10 sends call and exchange
         protected const short EXCHANGE_MEMORY = 2; // F2 sends exchange, without call
         protected const short QSL_QRZ_MEMORY = 3; // F3 sends "QSL QRZ?"
+        public const short SHIFT_QSL_QRZ_MEMORY = QSL_QRZ_MEMORY + SHIFT_OFFSET;
         protected const short MYCALL_MEMORY = 4;  // F4 sends my call
         protected const short HISCALL_MEMORY = 5; // F5 sends his call
         protected const short AGN_MEMORY = 6;     // F4 sends AGN?
-        protected const short NO_MEMORY = 1;     // flag that means no message at all
+        protected const short NO_MEMORY = 1;     // NO_MEMORY or less means no message at all
 
         protected Entry(WriteLogClrTypes.ISingleEntry wlEntry, WriteLogClrTypes.IWriteL wl)
         {
             m_wlEntry = wlEntry;
             m_wl = wl;
-            m_EntryId = wlEntry.GetEntryId(); // Only for debug displays
+            m_EntryId = wlEntry.GetEntryId(); 
         }
 
         #region events

@@ -36,13 +36,15 @@
             this.checkBoxCallVox = new System.Windows.Forms.CheckBox();
             this.checkBoxStopWithFocus = new System.Windows.Forms.CheckBox();
             this.cbRedBox = new System.Windows.Forms.CheckBox();
+            this.cbRadio2ShiftF3 = new System.Windows.Forms.CheckBox();
+            this.cbRadio2ShiftF1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.maxSecondsBetweenCALL)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(242, 93);
+            this.buttonOK.Location = new System.Drawing.Point(240, 123);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(56, 23);
             this.buttonOK.TabIndex = 20;
@@ -53,7 +55,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(242, 122);
+            this.buttonCancel.Location = new System.Drawing.Point(240, 152);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(56, 23);
             this.buttonCancel.TabIndex = 21;
@@ -84,7 +86,7 @@
             // controlHpSplit
             // 
             this.controlHpSplit.AutoSize = true;
-            this.controlHpSplit.Location = new System.Drawing.Point(13, 68);
+            this.controlHpSplit.Location = new System.Drawing.Point(13, 65);
             this.controlHpSplit.Name = "controlHpSplit";
             this.controlHpSplit.Size = new System.Drawing.Size(145, 17);
             this.controlHpSplit.TabIndex = 3;
@@ -104,7 +106,7 @@
             // checkBoxStopWithFocus
             // 
             this.checkBoxStopWithFocus.AutoSize = true;
-            this.checkBoxStopWithFocus.Location = new System.Drawing.Point(13, 96);
+            this.checkBoxStopWithFocus.Location = new System.Drawing.Point(13, 90);
             this.checkBoxStopWithFocus.Name = "checkBoxStopWithFocus";
             this.checkBoxStopWithFocus.Size = new System.Drawing.Size(178, 17);
             this.checkBoxStopWithFocus.TabIndex = 4;
@@ -114,12 +116,32 @@
             // cbRedBox
             // 
             this.cbRedBox.AutoSize = true;
-            this.cbRedBox.Location = new System.Drawing.Point(13, 123);
+            this.cbRedBox.Location = new System.Drawing.Point(13, 115);
             this.cbRedBox.Name = "cbRedBox";
             this.cbRedBox.Size = new System.Drawing.Size(103, 17);
             this.cbRedBox.TabIndex = 5;
-            this.cbRedBox.Text = "Enable Red Box";
+            this.cbRedBox.Text = "Enable &Red Box";
             this.cbRedBox.UseVisualStyleBackColor = true;
+            // 
+            // cbRadio2ShiftF3
+            // 
+            this.cbRadio2ShiftF3.AutoSize = true;
+            this.cbRadio2ShiftF3.Location = new System.Drawing.Point(13, 165);
+            this.cbRadio2ShiftF3.Name = "cbRadio2ShiftF3";
+            this.cbRadio2ShiftF3.Size = new System.Drawing.Size(195, 17);
+            this.cbRadio2ShiftF3.TabIndex = 7;
+            this.cbRadio2ShiftF3.Text = "Shift F3 &QRZ message on 2nd radio";
+            this.cbRadio2ShiftF3.UseVisualStyleBackColor = true;
+            // 
+            // cbRadio2ShiftF1
+            // 
+            this.cbRadio2ShiftF1.AutoSize = true;
+            this.cbRadio2ShiftF1.Location = new System.Drawing.Point(13, 140);
+            this.cbRadio2ShiftF1.Name = "cbRadio2ShiftF1";
+            this.cbRadio2ShiftF1.Size = new System.Drawing.Size(187, 17);
+            this.cbRadio2ShiftF1.TabIndex = 6;
+            this.cbRadio2ShiftF1.Text = "Shift &F1 CQ message on 2nd radio";
+            this.cbRadio2ShiftF1.UseVisualStyleBackColor = true;
             // 
             // RunModeSettingsForm
             // 
@@ -127,7 +149,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(308, 151);
+            this.ClientSize = new System.Drawing.Size(308, 189);
+            this.Controls.Add(this.cbRadio2ShiftF1);
+            this.Controls.Add(this.cbRadio2ShiftF3);
             this.Controls.Add(this.cbRedBox);
             this.Controls.Add(this.checkBoxStopWithFocus);
             this.Controls.Add(this.checkBoxCallVox);
@@ -159,5 +183,7 @@
         private System.Windows.Forms.CheckBox checkBoxCallVox;
         private System.Windows.Forms.CheckBox checkBoxStopWithFocus;
         private System.Windows.Forms.CheckBox cbRedBox;
+        private System.Windows.Forms.CheckBox cbRadio2ShiftF3;
+        private System.Windows.Forms.CheckBox cbRadio2ShiftF1;
     }
 }

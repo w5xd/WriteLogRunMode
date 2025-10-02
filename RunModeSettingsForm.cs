@@ -26,6 +26,8 @@ namespace WriteLogRunMode
             checkBoxCallVox.Checked = m_settings.FirstCallLetterStartsVOX;
             checkBoxStopWithFocus.Checked = m_settings.StopAlignsTransmitAndKeyboardFocus;
             cbRedBox.Checked = m_settings.EnableRedBox;
+            cbRadio2ShiftF1.Checked = m_settings.Radio2ShiftF1;
+            cbRadio2ShiftF3.Checked = m_settings.Radio2ShiftF3;
         }
 
         private void RunModeSettingsForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -39,6 +41,8 @@ namespace WriteLogRunMode
             m_settings.FirstCallLetterStartsVOX = checkBoxCallVox.Checked;
             m_settings.StopAlignsTransmitAndKeyboardFocus = checkBoxStopWithFocus.Checked;
             m_settings.EnableRedBox = cbRedBox.Checked;
+            m_settings.Radio2ShiftF1 = cbRadio2ShiftF1.Checked;
+            m_settings.Radio2ShiftF3 = cbRadio2ShiftF3.Checked;
             m_settings.Save();
         }
 

@@ -30,13 +30,17 @@ namespace WriteLogRunMode
 
         public CqEntry(WriteLogClrTypes.ISingleEntry wlEntry, WriteLogClrTypes.IWriteL wl)
             : base(wlEntry, wl)
-        {
-        }
+        {}
+
+        public void SetQslQrzMemory(short v) { m_QSL_QRZ_MEMORY = v; }
+        public void SetCqMemory(short v) { m_CQ_MEMORY = v; }
 
         #region object state
 
         private States m_state = States.IDLE;
         private short m_QueuedMessage = NO_MEMORY;
+        private short m_QSL_QRZ_MEMORY = QSL_QRZ_MEMORY;
+        private short m_CQ_MEMORY = CQ_MEMORY;
         private int m_SentCALLat = System.Environment.TickCount;
 
         #endregion
@@ -72,6 +76,16 @@ namespace WriteLogRunMode
             HeadphonesAsReceive();
         }
 
+        private bool OverrideMessageId(int id, out int over)
+        {
+            over = id;
+            if (id == QSL_QRZ_MEMORY)
+                over = m_QSL_QRZ_MEMORY;
+            else if (id == CQ_MEMORY)
+                over = m_CQ_MEMORY;
+            return over != id;
+        }
+
         public override short DelayStartMessage(int id) 
         {
 #if DEBUG
@@ -80,7 +94,9 @@ namespace WriteLogRunMode
                 m_state.ToString() + " " +
                 id.ToString());
 #endif
-            // If we return non-zero, WriteLog won't send this message.
+            // If we return one, WriteLog won't send this message.
+            // If we return zero, WriteLog sends this message as-is
+            // If we return anything else, WriteLog switches to that memory id
             if (m_other.SendingPriority == Sending_t.SENDING_DONT_STOPME)
             {
                 if (id > NO_MEMORY)
@@ -91,8 +107,12 @@ namespace WriteLogRunMode
                 return 1;
             }
             // detect the special case of starting the QSL message while a CQ is in progress
-            if ((id == QSL_QRZ_MEMORY) && (m_state == States.SENDING_CQ))
-                m_wl.InvokeKeyboardCommand("MessageAbortTransmission"); // Stop the CQ
+            if ((m_state == States.SENDING_CQ) && ((id == QSL_QRZ_MEMORY) || (id == m_QSL_QRZ_MEMORY)))
+                m_wl.InvokeKeyboardCommand("MessageAbortTransmission"); // Stop the CQ, so this message goes now rather than appended
+
+            int over2;
+            if (OverrideMessageId(id, out over2))
+                return (short)over2;            // check if we need to overide the message ID
             return 0; 
         }
 
@@ -110,10 +130,18 @@ namespace WriteLogRunMode
 #endif
             switch ((short)id)
             {
+                case SHIFT_CQ_MEMORY:
+                    if (!m_Settings.Radio2ShiftF1)
+                        goto default;
+                    else goto case CQ_MEMORY;
                 case CQ_MEMORY:
                     CheckWhetherCW();
                     SetState(States.SENDING_CQ);
                     m_SentCALLat = System.Environment.TickCount;
+                    break;
+
+                case SHIFT_QSL_QRZ_MEMORY:
+                    SetState(m_Settings.Radio2ShiftF3 ? States.SENDING_TU : States.SENDING_OTHER);
                     break;
 
                 case QSL_QRZ_MEMORY:
@@ -137,7 +165,6 @@ namespace WriteLogRunMode
                 default:
                     SetState(States.SENDING_OTHER);
                     break;
-
             }
             if ((stillActive == 0) || !m_Settings.EnableRedBox)
             {
@@ -197,6 +224,7 @@ namespace WriteLogRunMode
                 switch (m_state)
                 {
                     case States.DELAYED_TU:
+                    case States.RECEIVING_WITH_QUEUEDMSG:
                         break;
 
                     default:
@@ -225,7 +253,6 @@ namespace WriteLogRunMode
 #endif            
             }
         }
-
         public override void OperatorMadeEntry(bool QsoIsBlank, WriteLogClrTypes.ISingleEntry rentry)
         {
             if (QsoIsBlank)
@@ -359,8 +386,13 @@ namespace WriteLogRunMode
 
                     case States.RECEIVING_WITH_QUEUEDMSG:
                         if (m_QueuedMessage > NO_MEMORY)
-                            m_wlEntry.SendProgramMsg(m_QueuedMessage);
-                        m_QueuedMessage = NO_MEMORY; // only use it once
+                        {
+                            var queuedId = m_QueuedMessage;
+                            m_QueuedMessage = NO_MEMORY; // only use it once
+                            m_wlEntry.SendProgramMsg(queuedId);
+                        }
+                        else
+                            SetState(States.IDLE);
                         break;
                 }
             }
@@ -425,7 +457,7 @@ namespace WriteLogRunMode
             if (!m_other.Sending)
             {
                 SetState(States.SENDING_CQ);
-                m_wlEntry.SendProgramMsg(CQ_MEMORY);
+                m_wlEntry.SendProgramMsg(m_CQ_MEMORY);
             }
             else   //other radio was sending, so wait
                 SetState(States.IDLE);
@@ -438,7 +470,7 @@ namespace WriteLogRunMode
                 if (m_state != States.SENDING_TU)
                 {
                     SetState(States.SENDING_TU);
-                    m_wlEntry.SendProgramMsg(QSL_QRZ_MEMORY);
+                    m_wlEntry.SendProgramMsg(m_QSL_QRZ_MEMORY);
                 }
                 int maxSeconds = m_Settings.MaxSecondsBetweenCALL;
                 if ((maxSeconds > 0) && 
@@ -446,8 +478,9 @@ namespace WriteLogRunMode
                     maxSeconds))
                     m_wlEntry.SendProgramMsg(MYCALL_MEMORY);
             }
-            else   //other radio was sending, so wait
-                SetState(States.DELAYED_TU);
+            else   //other radio was sending, so wait...unless message is already queued up
+                if (m_state != States.RECEIVING_WITH_QUEUEDMSG)
+                    SetState(States.DELAYED_TU);
         }
     }
 
