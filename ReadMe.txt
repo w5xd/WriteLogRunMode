@@ -1,7 +1,7 @@
 Two Radio Run Mode processor for WriteLog.
 
-Version 2.0.11.0
-April, 2024 
+Version 2.0.12.0
+September, 2024 
 
 This is a Two Radio run mode keyboard shortcut extension for WriteLog.
 This extension has been successfully used to sustain very high rates. 
@@ -227,6 +227,11 @@ Copy it to WriteLog's Programs directory. (or copy it here and run Install.bat)
 
 Good luck.
 Wayne, W5XD
+
+********************************
+version 2.0.12.0	September, 2024
+When starting the TU/QSL/QRZ message, if a CQ is in progress, abort the CQ
+rather than tack the QSL message at its end.
 
 ********************************
 version 2.0.10.0	April, 2024

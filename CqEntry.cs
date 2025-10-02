@@ -90,6 +90,9 @@ namespace WriteLogRunMode
                 }
                 return 1;
             }
+            // detect the special case of starting the QSL message while a CQ is in progress
+            if ((id == QSL_QRZ_MEMORY) && (m_state == States.SENDING_CQ))
+                m_wl.InvokeKeyboardCommand("MessageAbortTransmission"); // Stop the CQ
             return 0; 
         }
 

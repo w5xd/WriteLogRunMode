@@ -3,7 +3,7 @@ To build this from source, it should work with Visual Studio Express 2010 as-is
 The References to the three WriteLog assemblies will need to be manually added.
 
 To get started:
-Run Visual C# 2010 Express
+Run Visual Studio 2019
 File Open Project WriteLogRunMode.csproj
 View Solution Explorer
 Under WriteLogRunMode in the Solution Explorer, right click References and then Add Reference...
