@@ -79,17 +79,12 @@ to the keyboard:
 		  letter into CALL, the holdTransmitVOX state is activated.
 
           Shift F1 ... on 2nd radio and Shift F3 ... on 2nd radio checkboxes 
-          DO NOT turn these on if your WriteLog version is less than 12.91.
           It causes 2RadioRunMode to use the shift f-key memories for the corresponding
-          transmissions (only for 2RadioRunMode), and only on the 2nd radio. (The very 
-          first CQ message on start2RadioRunMode, however, always uses F1, not Shift-F1, 
-          even if its on the 2nd radio.) With the QSL checkbox on, the + key in WriteLog
-          still sends F3 and not Shift+F3, however the 2RadioRunMode will initiate 
-          SHIFT+F3 when a QSO is logged with some other method than + (e.g. ENTER)
-          
+          transmissions (only for 2RadioRunMode), and only on the 2nd radio.
           The 2nd radio is defined to be the one on the lower of the two Entry Windows 
           on screen involved in dual run. Without the check boxes, the same memory is 
           used on both radios.
+          DO NOT turn these SHIFT F1/F2 checkboxes with WriteLog versions less than 12.91.
 
 External:start2RadioRunMode--starts 2-radio CQ. 
           Sends Message11 and then Message11 repeats and alternates on both radios
